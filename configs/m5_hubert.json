@@ -1,0 +1,11 @@
+{
+  "model_type": "hubert",
+  "output_dir": "artifacts/m5_hubert",
+  "epochs": 5,
+  "batch_size": 8,
+  "lr": 0.00002,
+  "sample_rate": 16000,
+  "duration": 5.0,
+  "freeze_feature_encoder": true,
+  "noise_prob": 0.7
+}

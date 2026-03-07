@@ -1,0 +1,11 @@
+{
+  "model_type": "cnn",
+  "output_dir": "artifacts/m3_cnn",
+  "epochs": 12,
+  "batch_size": 32,
+  "lr": 0.0003,
+  "sample_rate": 16000,
+  "duration": 5.0,
+  "n_mels": 96,
+  "noise_prob": 0.7
+}

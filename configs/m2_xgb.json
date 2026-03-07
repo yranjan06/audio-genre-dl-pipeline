@@ -1,0 +1,7 @@
+{
+  "model_type": "xgb",
+  "output_dir": "artifacts/m2_xgb",
+  "val_ratio": 0.2,
+  "sample_rate": 16000,
+  "duration": 5.0
+}

@@ -1,25 +1,19 @@
 venv/
 .venv/
 __pycache__/
-data/raw/
-data/processed/
 *.py[cod]
 .ipynb_checkpoints/
+
+# Local data and outputs
+data/raw/
+data/processed/
 models/
+artifacts/
 *.pth
 *.pt
-kaggle.json
+*.pkl
+submission*.csv
 
-- 
-+ venv/
-+ .venv/
-+ __pycache__/
-+ data/raw/
-+ data/processed/
-+ *.py[cod]
-+ .ipynb_checkpoints/
-+ models/
-+ *.pth
-+ *.pt
-+ kaggle.json
-+ 
+# Secrets
+kaggle.json
+.env
