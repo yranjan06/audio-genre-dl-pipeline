@@ -1,0 +1,25 @@
+venv/
+.venv/
+__pycache__/
+data/raw/
+data/processed/
+*.py[cod]
+.ipynb_checkpoints/
+models/
+*.pth
+*.pt
+kaggle.json
+
+- 
++ venv/
++ .venv/
++ __pycache__/
++ data/raw/
++ data/processed/
++ *.py[cod]
++ .ipynb_checkpoints/
++ models/
++ *.pth
++ *.pt
++ kaggle.json
++ 
