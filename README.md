@@ -1,170 +1,73 @@
-# Messy Mashup: End-to-End Project Pipeline
+# Music Genre Classification — Messy Mashup Challenge
 
-This repository now contains a complete training and inference pipeline for the Kaggle
-competition and viva requirements.
+**Roll No**: 22f1001611  
+**Course**: BSDA2001P — Introduction to DL and GenAI  
+**Project**: T1 2026 Kaggle Competition
 
-## What is covered
+## Overview
 
-- EDA and baseline notebooks (`notebooks/`)
-- Classical model: MFCC/mel/chroma features + XGBoost fallback
-- Scratch deep models: CNN and CRNN
-- Pretrained model: HuBERT fine-tuning
-- Macro-F1 based validation tracking
-- Inference-only submission generation
-- CSV majority-vote ensemble utility
+Classify music genres from noisy mashup audio files. Training data contains clean stem files (vocals, drums, bass, other) organized by genre; test data consists of mashups combining stems from different songs with added environmental noise.
 
-## Repository layout
+## Project Structure
 
-- `notebooks/milestones/`: milestone-wise experimentation notebooks
-- `scripts/dataset.py`: data loading, stem mixing, augmentation, test datasets
-- `scripts/model.py`: CNN, CRNN, HuBERT model builders
-- `scripts/train.py`: train entrypoint (`xgb`, `cnn`, `crnn`, `hubert`)
-- `scripts/predict.py`: inference entrypoint and submission writer
-- `scripts/runners/`: milestone-specific convenience runners
-- `scripts/ensemble.py`: majority-vote ensembling over submission files
-- `scripts/run_pipeline.py`: one-command orchestrator (train + predict + ensemble)
-
-```text
-dl-genai-project-26-t1/
-├── configs/
-├── data/
-│   ├── external/
-│   ├── interim/
-│   ├── processed/        # ignored in git
-│   └── raw/              # ignored in git
+```
+project-name/
 ├── notebooks/
-│   ├── milestones/
-│   └── archive/
-├── scripts/
-│   └── runners/
-├── artifacts/            # ignored in git (checkpoints/metrics/logs)
-├── submissions/
+│   ├── milestone-1.ipynb      # EDA + Random Baseline
+│   ├── milestone-2.ipynb      # XGBoost (MFCC + Chroma + Spectral)
+│   └── final_notebook.ipynb   # CNN + CRNN + HuBERT + Ensemble
+├── src/
+│   ├── train.py               # Model definitions + training loops
+│   ├── inference.py           # Test inference + TTA + ensemble
+│   └── utils.py               # Constants, configs, audio utilities
 ├── reports/
-│   └── figures/
-└── tests/
+│   ├── milestone-1-report.pdf
+│   ├── milestone-2-report.pdf
+│   └── final-report.pdf
+├── models/                    # Saved model weights (.pth) — gitignored
+├── requirements.txt
+└── README.md
 ```
 
-## Milestone notebooks
+## Branching Strategy
 
-- `notebooks/milestones/m1_eda_random_baseline.ipynb`
-- `notebooks/milestones/m2_classical_ml.ipynb`
-- `notebooks/milestones/m3_m5_deep_models.ipynb`
+| Branch | Contents |
+|--------|----------|
+| `main` | Latest stable code, all milestones merged |
+| `milestone-1` | EDA + Random Baseline |
+| `milestone-2` | XGBoost classical ML baseline |
+| `milestone-3` | CNN + CRNN + HuBERT + Ensemble (Final) |
 
-## Setup
+## Approach
+
+### Milestone 1 — EDA + Random Baseline
+- Class distribution analysis, audio stats, waveform/spectrogram visualization
+- Random genre assignment (~10% accuracy baseline)
+
+### Milestone 2 — XGBoost
+- Hand-crafted features: MFCC (20), Chroma (12), Spectral Contrast, Centroid, Bandwidth, Rolloff, ZCR, Tempo
+- Noise augmentation with ESC-50 environmental sounds
+- XGBoost classifier with WandB logging
+
+### Milestone 3 — Deep Learning + Ensemble
+- **CNN** (from scratch): 3-layer CNN with BatchNorm + AdaptiveAvgPool on mel spectrograms
+- **CRNN**: CNN feature extractor → Bidirectional LSTM for temporal patterns
+- **HuBERT**: Fine-tuned `superb/hubert-base-superb-ks` with phased training (frozen → unfrozen)
+- **Key Innovation**: Cross-song stem mixing — each stem from a DIFFERENT song of same genre (3x dataset multiplication)
+- **Ensemble**: Weighted soft voting (HuBERT 0.65 + CRNN 0.20 + CNN 0.15) with systematic TTA (5 overlapping 10s windows)
+- **Target**: 0.80+ Macro F1
+
+## How to Run
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-W&B key should be passed via environment variable (never hardcode):
+Run notebooks in order on Kaggle (GPU required for Milestone 3):
+1. `notebooks/milestone-1.ipynb`
+2. `notebooks/milestone-2.ipynb`
+3. `notebooks/final_notebook.ipynb`
 
-```bash
-export WANDB_API_KEY="<your_wandb_api_key>"
-```
+## WandB
 
-## Dataset expectation
-
-`--base-dir` must point to Kaggle competition folder:
-
-```text
-/kaggle/input/jan-2026-dl-gen-ai-project/messy_mashup
-```
-
-Expected inside base dir:
-
-- `genres_stems/`
-- `mashups/`
-- `test.csv`
-- `ESC-50-master/audio` or `ESC-50/audio`
-
-## One-command full run
-
-```bash
-python -m scripts.run_pipeline \
-  --base-dir /kaggle/input/jan-2026-dl-gen-ai-project/messy_mashup \
-  --output-root artifacts/full_run
-```
-
-Use `--skip-hubert` (or other `--skip-*`) when runtime is tight.
-
-## Training commands
-
-### 1) Classical model (Milestone 2)
-
-```bash
-python -m scripts.runners.train_m2_xgb \
-  --base-dir /kaggle/input/jan-2026-dl-gen-ai-project/messy_mashup \
-  --output-dir artifacts/m2_xgb
-```
-
-### 2) CNN from scratch (Milestone 3)
-
-```bash
-python -m scripts.runners.train_m3_cnn \
-  --base-dir /kaggle/input/jan-2026-dl-gen-ai-project/messy_mashup \
-  --epochs 12 \
-  --batch-size 32 \
-  --output-dir artifacts/m3_cnn
-```
-
-### 3) CRNN (Milestone 4)
-
-```bash
-python -m scripts.runners.train_m4_crnn \
-  --base-dir /kaggle/input/jan-2026-dl-gen-ai-project/messy_mashup \
-  --epochs 12 \
-  --batch-size 24 \
-  --output-dir artifacts/m4_crnn
-```
-
-### 4) HuBERT fine-tuning (Milestone 5)
-
-```bash
-python -m scripts.runners.train_m5_hubert \
-  --base-dir /kaggle/input/jan-2026-dl-gen-ai-project/messy_mashup \
-  --epochs 5 \
-  --batch-size 8 \
-  --lr 2e-5 \
-  --output-dir artifacts/m5_hubert
-```
-
-## Inference-only submission (recommended for Kaggle submit notebook)
-
-### XGB
-
-```bash
-python -m scripts.predict \
-  --base-dir /kaggle/input/jan-2026-dl-gen-ai-project/messy_mashup \
-  --model-type xgb \
-  --checkpoint artifacts/m2_xgb/best_xgb.pkl \
-  --output-csv submissions/submission_xgb.csv
-```
-
-### CNN/CRNN/HuBERT
-
-```bash
-python -m scripts.runners.predict_submission \
-  --base-dir /kaggle/input/jan-2026-dl-gen-ai-project/messy_mashup \
-  --model-type hubert \
-  --checkpoint artifacts/m5_hubert/best_hubert.pth \
-  --output-csv submissions/submission_hubert.csv
-```
-
-Replace `hubert` with `cnn` or `crnn` and matching checkpoint path as needed.
-
-## Ensemble
-
-```bash
-python -m scripts.ensemble \
-  --inputs submissions/submission_xgb.csv submissions/submission_crnn.csv submissions/submission_hubert.csv \
-  --output submissions/submission_ensemble.csv
-```
-
-## Notes for Kaggle runtime
-
-- Keep training and submission in separate notebooks.
-- Use `num_workers=2` and moderate batch sizes for stability.
-- Prefer fewer epochs + better augmentation over very long runs.
-- Track `val_macro_f1` for model selection.
+All training runs logged to project `22f1001611-t12026`.
