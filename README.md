@@ -11,7 +11,7 @@ The final solution is a **Weighted Ensemble** of CNN, CRNN, and a fine-tuned **H
 
 ---
 
-## 🚀 Milestone Tracker
+## Milestone Tracker
 
 The project was developed in incremental milestones. The code for each milestone is stored in the `/notebooks` folder.
 
@@ -25,7 +25,7 @@ The project was developed in incremental milestones. The code for each milestone
 
 ---
 
-## 🧠 Key Techniques & Innovations
+## Key Techniques & Innovations
 
 1. **Cross-Song Stem Mixing:** Instead of training on clean songs, the custom PyTorch `Dataset` mixes stems (vocals, drums, bass, other) from *different* songs of the same genre on the fly, perfectly mirroring the noisy test distribution.
 2. **Dynamic Noise Injection (ESC-50):** Applied realistic environmental noise at random Signal-to-Noise Ratios (SNR) to aggressively regularize the models.
@@ -35,7 +35,7 @@ The project was developed in incremental milestones. The code for each milestone
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
 ```text
 dl-genai-project-26-t1/
@@ -58,7 +58,7 @@ dl-genai-project-26-t1/
 
 ---
 
-## 💻 How to Run
+## How to Run
 
 ### 1. Installation
 Ensure you have Python 3.10+ installed. Clone the repository and install the dependencies:
@@ -79,7 +79,7 @@ You can train the models step-by-step by running the milestone notebooks sequent
 
 ---
 
-## 🏆 Results
+## Results
 
 Expected performance on the local validation split:
 - **XGBoost:** Baseline ML performance.
