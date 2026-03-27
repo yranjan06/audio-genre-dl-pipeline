@@ -2,8 +2,10 @@
 
 **Author:** Ranjan Yadav (Roll Number: 22f1001611)
 
-## Overview
-This repository contains the complete pipeline for the "Messy Mashup" Kaggle competition (Jan 2026 DL/Gen AI Project). The goal of this project is to accurately classify the genre of 30-second music mashups that have been heavily augmented with background noise and overlapping tracks.
+## Messy Mashup Audio Genre Classification
+**Live Web Demo:** [Try the deployed model on Hugging Face Spaces](https://huggingface.co/spaces/imranjan/audio-genre-classifier)
+
+A deep learning project designed to solve the *Messy Mashup: Genre Classification from Audio* Kaggle competition. The objective is to accurately predict the musical genre of 30-second noisy audio mashups synthesized from diverse and overlapping stem tracks augmented with background noise.
 
 To solve this, a progressive experimentation approach was taken, starting from a traditional Machine Learning baseline and advancing to state-of-the-art Deep Learning and Transformer-based models. 
 
