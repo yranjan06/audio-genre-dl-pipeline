@@ -29,6 +29,10 @@ The project was developed in incremental milestones. The code for each milestone
 
 ## Key Techniques & Innovations
 
+<div align="center">
+  <img src="reports/figures/messy_mashup_pipeline_architecture.svg" alt="Pipeline Architecture" width="100%">
+</div>
+
 1. **Cross-Song Stem Mixing:** Instead of training on clean songs, the custom PyTorch `Dataset` mixes stems (vocals, drums, bass, other) from *different* songs of the same genre on the fly, perfectly mirroring the noisy test distribution.
 2. **Dynamic Noise Injection (ESC-50):** Applied realistic environmental noise at random Signal-to-Noise Ratios (SNR) to aggressively regularize the models.
 3. **Phased Training (HuBERT):** To prevent catastrophic forgetting of the pretrained HuBERT encoder, the feature encoder was frozen initially, and later unfrozen with a much lower learning rate (`1e-5` via `AdamW`).
