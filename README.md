@@ -1,7 +1,5 @@
 # Messy Mashup: Genre Classification from Audio
 
-**Author:** Ranjan Yadav (Roll Number: 22f1001611)
-
 ## Messy Mashup Audio Genre Classification
 **Live Web Demo:** [Try the deployed model on Hugging Face Spaces](https://huggingface.co/spaces/imranjan/audio-genre-classifier)
 
