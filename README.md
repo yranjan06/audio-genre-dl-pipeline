@@ -1,4 +1,4 @@
-# Messy Mashup: Genre Classification from Audio
+## Messy Mashup: Genre Classification from Audio
 
 ## Messy Mashup Audio Genre Classification
 **Live Web Demo:** [Try the deployed model on Hugging Face Spaces](https://huggingface.co/spaces/imranjan/audio-genre-classifier)
@@ -91,3 +91,4 @@ Expected performance on the local validation split:
 - **CRNN:** Marginal improvement via temporal modeling.
 - **HuBERT:** State-of-the-art performance (>0.80 Macro F1).
 - **Ensemble:** The most robust generalization on the unseen Kaggle test set.
+]([https://medium.com/@ranjanydv.code/how-we-classified-music-genres-from-noisy-audio-mashups-using-hubert-and-a-custom-pytorch-pipeline-04824f8d6de1](https://medium.com/@ranjanydv.code/how-we-classified-music-genres-from-noisy-audio-mashups-using-hubert-and-a-custom-pytorch-pipeline-04824f8d6de1))
