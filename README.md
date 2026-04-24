@@ -89,6 +89,6 @@ Expected performance on the local validation split:
 - **XGBoost:** Baseline ML performance.
 - **CNN:** Strong improvement using Mel Spectrograms.
 - **CRNN:** Marginal improvement via temporal modeling.
-**HuBERT (Fine-tuned):** 0.9460 Macro F1 score (ensemble with TTA)
+- **HuBERT (Fine-tuned):** 0.9460 Macro F1 score (ensemble with TTA).
 - **Ensemble:** The most robust generalization on the unseen Kaggle test set.
 ]([https://medium.com/@ranjanydv.code/how-we-classified-music-genres-from-noisy-audio-mashups-using-hubert-and-a-custom-pytorch-pipeline-04824f8d6de1](https://medium.com/@ranjanydv.code/how-we-classified-music-genres-from-noisy-audio-mashups-using-hubert-and-a-custom-pytorch-pipeline-04824f8d6de1))
